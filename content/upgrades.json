@@ -1,0 +1,59 @@
+{
+  "ascend": {
+    "requirementBase": 25,
+    "requirementGrowth": 6,
+    "luckPerAscension": 0.75
+  },
+  "upgrades": [
+    {
+      "id": "luck",
+      "name": "Fortune",
+      "icon": "🍀",
+      "desc": "+25% Luck per level. Lowers the effective rarity of every aura.",
+      "baseCost": 50,
+      "growth": 1.55,
+      "max": 0,
+      "effect": { "perLevel": 0.25 }
+    },
+    {
+      "id": "quickroll",
+      "name": "Quick Roll",
+      "icon": "⚡",
+      "desc": "Shortens the cooldown between rolls.",
+      "baseCost": 120,
+      "growth": 1.9,
+      "max": 12,
+      "effect": { "baseMs": 1100, "factor": 0.87, "floorMs": 120 }
+    },
+    {
+      "id": "multiroll",
+      "name": "Multi Roll",
+      "icon": "🎲",
+      "desc": "+1 aura per roll. Rolls independently at full odds.",
+      "baseCost": 900,
+      "growth": 3.4,
+      "max": 8,
+      "effect": { "perLevel": 1 }
+    },
+    {
+      "id": "autoroll",
+      "name": "Auto Roll",
+      "icon": "🤖",
+      "desc": "Rolls by itself, even while the tab is in the background.",
+      "baseCost": 2500,
+      "growth": 2.6,
+      "max": 10,
+      "effect": { "perLevel": 1 }
+    },
+    {
+      "id": "essence",
+      "name": "Essence Tap",
+      "icon": "💠",
+      "desc": "+35% Essence gained from every roll.",
+      "baseCost": 400,
+      "growth": 1.75,
+      "max": 0,
+      "effect": { "perLevel": 0.35 }
+    }
+  ]
+}

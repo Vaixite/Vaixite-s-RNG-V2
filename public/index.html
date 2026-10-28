@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Vaixite's RNG V2</title>
+<meta name="description" content="Roll auras. Chase breakthroughs. Climb the leaderboard." />
+<meta name="theme-color" content="#080a13" />
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<link rel="stylesheet" href="/css/game.css" />
+</head>
+<body>
+<!-- Biome tint washes the whole page; driven by --sky-a / --sky-b -->
+<div id="sky" aria-hidden="true"></div>
+<div id="stars" aria-hidden="true"></div>
+
+<header class="topbar">
+  <div class="brand">
+    <span class="brand-mark">🎲</span>
+    <div>
+      <h1>Vaixite's <span>RNG</span> <em>V2</em></h1>
+      <p class="who" id="who">connecting…</p>
+    </div>
+  </div>
+
+  <div class="biome-chip" id="biomeChip" title="The world biome rotates for everyone at once">
+    <span class="biome-dot" id="biomeDot"></span>
+    <div class="biome-text">
+      <strong id="biomeName">THE PLAINS</strong>
+      <small id="biomeTimer">—</small>
+    </div>
+  </div>
+
+  <nav class="tabs" id="tabs">
+    <button class="tab is-active" data-view="inventory">Inventory</button>
+    <button class="tab" data-view="bestiary">Bestiary</button>
+    <button class="tab" data-view="upgrades">Upgrades</button>
+    <button class="tab" data-view="leaderboard">Leaderboard</button>
+  </nav>
+</header>
+
+<main class="stage">
+  <!-- ---------- left: world feed ---------- -->
+  <aside class="panel panel-feed">
+    <h2 class="panel-title">World Feed <span class="pill" id="onlineCount">0</span></h2>
+    <div class="feed" id="feed" aria-live="polite"><p class="muted">Waiting for rolls…</p></div>
+  </aside>
+
+  <!-- ---------- centre: the roll ---------- -->
+  <section class="panel panel-roll">
+    <div class="hud">
+      <div class="hud-item"><small>Luck</small><strong id="hudLuck">1×</strong></div>
+      <div class="hud-item"><small>Essence</small><strong id="hudEssence">0</strong></div>
+      <div class="hud-item"><small>Rolls</small><strong id="hudRolls">0</strong></div>
+      <div class="hud-item"><small>Best</small><strong id="hudBest">—</strong></div>
+    </div>
+
+    <div class="roller" id="roller">
+      <div class="aura-stage" id="auraStage">
+        <div class="aura-orb" id="auraOrb"></div>
+        <div class="aura-name" id="auraName">Press Roll</div>
+        <div class="aura-odds" id="auraOdds">every aura has a 1 in N chance</div>
+        <div class="aura-tags" id="auraTags"></div>
+      </div>
+    </div>
+
+    <button class="roll-btn" id="rollBtn" disabled>
+      <span class="roll-label">ROLL</span>
+      <span class="roll-sub" id="rollSub">starting…</span>
+      <span class="cooldown" id="cooldownBar"></span>
+    </button>
+
+    <div class="quick-row">
+      <label class="switch"><input type="checkbox" id="autoToggle" /><span>Auto Roll</span></label>
+      <span class="spacer"></span>
+      <button class="ghost-btn" id="renameBtn">Rename</button>
+      <button class="ghost-btn" id="resetBtn">Delete &amp; switch</button>
+    </div>
+  </section>
+
+  <!-- ---------- right: collection + upgrades ---------- -->
+  <aside class="panel panel-side">
+    <div class="progress-wrap">
+      <div class="progress-head">
+        <span>Collection</span>
+        <span id="collectCount">0 / 0</span>
+      </div>
+      <div class="progress"><i id="collectBar"></i></div>
+      <p class="muted small" id="ascendInfo"></p>
+    </div>
+
+    <div class="view" id="view"></div>
+  </aside>
+</main>
+
+<!-- cutscene overlay for EPIC and above -->
+<div class="cutscene" id="cutscene" aria-hidden="true">
+  <div class="cutscene-star" id="cutsceneStar"></div>
+  <div class="cutscene-body">
+    <div class="cutscene-tier" id="cutsceneTier"></div>
+    <div class="cutscene-name" id="cutsceneName"></div>
+    <div class="cutscene-odds" id="cutsceneOdds"></div>
+  </div>
+</div>
+
+<div class="toasts" id="toasts"></div>
+
+<!-- account picker, shown on first visit -->
+<div class="modal" id="joinModal" aria-hidden="true">
+  <div class="modal-card">
+    <h2>Welcome to Vaixite's RNG V2</h2>
+    <p>Pick a name and start rolling auras. Rarer auras are a bigger number —
+      <b>1/2</b> is common, <b>1/134,217,728</b> will end you.</p>
+    <form id="joinForm">
+      <input id="joinName" maxlength="18" placeholder="your name" autocomplete="off" autofocus />
+      <button type="submit">Start rolling</button>
+    </form>
+    <p class="muted small">Progress is stored in the local JSON database on this machine.</p>
+  </div>
+</div>
+
+<noscript><p style="padding:2rem;color:#fff">This game needs JavaScript.</p></noscript>
+<script type="module" src="/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+{
+  "sell": {
+    "coefficient": 10,
+    "exponent": 2.5,
+    "min": 1
+  },
+  "items": [
+    {
+      "id": "luckElixir",
+      "name": "Luck Elixir",
+      "icon": "🧪",
+      "desc": "1.5× Luck for 10 minutes.",
+      "buyPrice": 15000,
+      "effect": { "type": "luckBuff", "mult": 1.5, "durationMs": 600000 }
+    },
+    {
+      "id": "fortuneCharm",
+      "name": "Fortune Charm",
+      "icon": "🍀",
+      "desc": "2× Luck for 3 minutes.",
+      "buyPrice": 40000,
+      "effect": { "type": "luckBuff", "mult": 2, "durationMs": 180000 }
+    },
+    {
+      "id": "essenceSurge",
+      "name": "Essence Surge",
+      "icon": "💠",
+      "desc": "Instantly gain 750 essence.",
+      "buyPrice": 12000,
+      "effect": { "type": "essence", "amount": 750 }
+    }
+  ]
+}

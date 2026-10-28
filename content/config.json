@@ -1,0 +1,12 @@
+{
+  "guestPrefix": "guest-",
+  "guestDigits": 4,
+  "nameMin": 3,
+  "nameMax": 18,
+  "passwordMin": 6,
+  "sessionDays": 30,
+  "feedLimit": 60,
+  "feedOddsThreshold": 1000,
+  "maxRollsPerRequest": 32,
+  "loginRate": { "max": 10, "windowMs": 60000 }
+}
