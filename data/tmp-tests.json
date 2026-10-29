@@ -1,0 +1,195 @@
+{
+  "version": 2,
+  "createdAt": 1793310083251,
+  "players": {
+    "689d9eb5-5190-477d-b46a-74c98f7e7836": {
+      "id": "689d9eb5-5190-477d-b46a-74c98f7e7836",
+      "name": "Renamedmvu2j38i",
+      "createdAt": 1793310097708,
+      "lastSeenAt": 1793310109462,
+      "essence": 32,
+      "money": 42,
+      "totalRolls": 11,
+      "lifetimeRolls": 11,
+      "ascensions": 0,
+      "ascendPoints": 0,
+      "tree": {},
+      "mining": null,
+      "clicker": null,
+      "levels": {
+        "luck": 0,
+        "quickroll": 0,
+        "multiroll": 0,
+        "autoroll": 0,
+        "essence": 0
+      },
+      "inventory": {
+        "rare": {
+          "count": 1,
+          "bestOdds": 16,
+          "lastOdds": 16,
+          "firstAt": 1793310097836,
+          "lastAt": 1793310102461,
+          "name": "Rare",
+          "color": "#5fb8ff",
+          "fx": "orbit",
+          "odds": 16,
+          "tier": "uncommon",
+          "tierName": "UNCOMMON",
+          "tierColor": "#6ee7a0"
+        },
+        "cool": {
+          "count": 6,
+          "bestOdds": 6,
+          "lastOdds": 6,
+          "firstAt": 1793310098996,
+          "lastAt": 1793310105945,
+          "name": "Cool",
+          "color": "#7be0c4",
+          "fx": "soft",
+          "odds": 6,
+          "tier": "common",
+          "tierName": "COMMON",
+          "tierColor": "#b6c2cf"
+        },
+        "common": {
+          "count": 3,
+          "bestOdds": 2,
+          "lastOdds": 2,
+          "firstAt": 1793310107106,
+          "lastAt": 1793310109419,
+          "name": "Common",
+          "color": "#b6c2cf",
+          "fx": "soft",
+          "odds": 2,
+          "tier": "common",
+          "tierName": "COMMON",
+          "tierColor": "#b6c2cf"
+        }
+      },
+      "items": {},
+      "gear": [],
+      "equipped": {},
+      "buffs": [],
+      "best": {
+        "auraId": "rare",
+        "odds": 16,
+        "isBT": false,
+        "at": 1793310097836
+      },
+      "lastRollAt": 1793310109419,
+      "counters": {
+        "moneyEarned": 17,
+        "essenceEarned": 32,
+        "pointsEarned": 0,
+        "upgradesBought": 0,
+        "sells": 1,
+        "crafts": 0,
+        "gearCrafted": 0,
+        "itemsUsed": 0,
+        "potions": 0,
+        "minePicks": 0,
+        "ores": {}
+      },
+      "biomesSeen": {
+        "normal": true
+      },
+      "achievements": {
+        "first_roll": 1793310097836
+      },
+      "salt": "bbe258b097eecf1ea32cbbcac164001e",
+      "passwordHash": "bd8b1a8bde8a8f6a5a20b061d5ca93b2eceb96d4f0c782e889a65a1fb13c73571f3e66dc8e54293acbaaaa50c9ddbc95884e6dba32e082ce87f1653cf460ba41"
+    }
+  },
+  "legacy": {},
+  "sessions": {
+    "269826b5546ae7916bdf8643af737f4669b53092f6875c09": {
+      "playerId": "689d9eb5-5190-477d-b46a-74c98f7e7836",
+      "createdAt": 1793310097747,
+      "expiresAt": 1795902097747
+    },
+    "a53fc9ad4b63e876fc2068484617f35dd545c057f71af130": {
+      "playerId": "689d9eb5-5190-477d-b46a-74c98f7e7836",
+      "createdAt": 1793310097828,
+      "expiresAt": 1795902097828
+    }
+  },
+  "feed": [
+    {
+      "id": "c43ebca8-8bdf-4bed-b780-6cfaa80280cc",
+      "player": "Testmvu2j38i",
+      "auraId": "common",
+      "auraName": "Common",
+      "color": "#b6c2cf",
+      "tier": "common",
+      "tierName": "COMMON",
+      "odds": 2,
+      "isBT": false,
+      "biome": "normal",
+      "biomeName": "THE PLAINS",
+      "at": 1793310107106
+    },
+    {
+      "id": "95748247-0304-4fb4-ad9d-54e3d15426cd",
+      "player": "Testmvu2j38i",
+      "auraId": "cool",
+      "auraName": "Cool",
+      "color": "#7be0c4",
+      "tier": "common",
+      "tierName": "COMMON",
+      "odds": 6,
+      "isBT": false,
+      "biome": "normal",
+      "biomeName": "THE PLAINS",
+      "at": 1793310098996
+    },
+    {
+      "id": "b9eec1eb-365e-4777-8083-3805ee0b4151",
+      "player": "Testmvu2j38i",
+      "auraId": "rare",
+      "auraName": "Rare",
+      "color": "#5fb8ff",
+      "tier": "uncommon",
+      "tierName": "UNCOMMON",
+      "odds": 16,
+      "isBT": false,
+      "biome": "normal",
+      "biomeName": "THE PLAINS",
+      "at": 1793310097836
+    },
+    {
+      "id": "f83fcdb2-3b88-4cc9-8b96-630e7f458adb",
+      "player": "guest-1372",
+      "auraId": "uncommon",
+      "auraName": "Uncommon",
+      "color": "#8fe3a8",
+      "tier": "common",
+      "tierName": "COMMON",
+      "odds": 4,
+      "isBT": false,
+      "biome": "normal",
+      "biomeName": "THE PLAINS",
+      "at": 1793310097832
+    },
+    {
+      "id": "3ea436ec-50ed-47db-8ae5-1c600a00aa77",
+      "player": "guest-9988",
+      "auraId": "cool",
+      "auraName": "Cool",
+      "color": "#7be0c4",
+      "tier": "common",
+      "tierName": "COMMON",
+      "odds": 6,
+      "isBT": false,
+      "biome": "normal",
+      "biomeName": "THE PLAINS",
+      "at": 1793310089334
+    }
+  ],
+  "meta": {
+    "totalRolls": 13,
+    "biomeIndex": 0,
+    "biomeStartedAt": 0,
+    "nextPlayerId": 2
+  }
+}

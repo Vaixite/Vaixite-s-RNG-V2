@@ -18,12 +18,29 @@ export const $ = (sel, root = document) => root.querySelector(sel);
 
 export const el = document.createElement.bind(document);
 
+/**
+ * Apply a style object.
+ *
+ * Custom properties (`--aura`) are the trap here: they are not real properties
+ * on CSSStyleDeclaration, so `style['--aura'] = x` — which is what
+ * `Object.assign(node.style, …)` does — just parks a stray JS property on the
+ * object and the browser never sees the value. They have to go through
+ * setProperty(), or every card silently falls back to its default colour.
+ */
+function setStyle(node, styles) {
+  for (const [prop, value] of Object.entries(styles || {})) {
+    if (value === null || value === undefined || value === false) continue;
+    if (prop.startsWith('--')) node.style.setProperty(prop, value);
+    else node.style[prop] = value;
+  }
+}
+
 /** Tiny hyperscript: h('div', { class: 'x' }, 'text', child) */
 export function h(tag, props, ...kids) {
   const node = el(tag);
   for (const [k, v] of Object.entries(props || {})) {
     if (k === 'class') node.className = v;
-    else if (k === 'style' && typeof v === 'object') Object.assign(node.style, v);
+    else if (k === 'style' && typeof v === 'object') setStyle(node, v);
     else if (k.startsWith('on') && typeof v === 'function') node.addEventListener(k.slice(2), v);
     else if (k === 'html') node.innerHTML = v;
     else if (v !== null && v !== undefined && v !== false) node.setAttribute(k, v);
@@ -60,6 +77,31 @@ export function fmtMs(ms) {
   if (s < 60) return `${s}s`;
   const m = Math.floor(s / 60);
   return `${m}m ${String(s % 60).padStart(2, '0')}s`;
+}
+
+/** Short clock for countdowns: "0:47", "12:05". */
+export function fmtClock(ms) {
+  const s = Math.max(0, Math.ceil(ms / 1000));
+  const m = Math.floor(s / 60);
+  return `${m}:${String(s % 60).padStart(2, '0')}`;
+}
+
+/**
+ * "#aabbcc" / "#abc" → "rgba(r,g,b,a)".
+ *
+ * Feed rows are tinted with their rarity colour at a low alpha, and the tier
+ * colours are authored as hex in content/rarity.json — so the alpha has to be
+ * applied in JS rather than with color-mix(), which older WebKit chokes on.
+ * Anything unparseable becomes a neutral white so a bad colour can never
+ * produce an invalid style.
+ */
+export function hexToRgba(hex, alpha = 1) {
+  const m = /^#?([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(String(hex ?? '').trim());
+  if (!m) return `rgba(255, 255, 255, ${alpha})`;
+  let s = m[1];
+  if (s.length === 3) s = s.split('').map((c) => c + c).join('');
+  const n = parseInt(s, 16);
+  return `rgba(${(n >> 16) & 255}, ${(n >> 8) & 255}, ${n & 255}, ${alpha})`;
 }
 
 export function timeAgo(ts) {

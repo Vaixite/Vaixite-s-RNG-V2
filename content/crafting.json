@@ -1,36 +1,159 @@
 {
   "recipes": [
-    { "id": "forge_rare",         "name": "Forge Rare",         "inputs": [{ "aura": "uncommon", "count": 3 }],  "money": 10,     "output": { "aura": "rare", "count": 1 } },
-    { "id": "forge_divinus",      "name": "Forge Divinus",      "inputs": [{ "aura": "rare", "count": 3 }],       "money": 25,     "output": { "aura": "divinus", "count": 1 } },
-    { "id": "forge_crystallized", "name": "Forge Crystallized", "inputs": [{ "aura": "divinus", "count": 3 }],    "money": 60,     "output": { "aura": "crystallized", "count": 1 } },
-    { "id": "forge_dizzy",        "name": "Forge Dizzy",        "inputs": [{ "aura": "crystallized", "count": 3 }],"money": 120,    "output": { "aura": "dizzy", "count": 1 } },
-    { "id": "forge_rage",         "name": "Forge Rage",         "inputs": [{ "aura": "dizzy", "count": 3 }],      "money": 200,    "output": { "aura": "rage", "count": 1 } },
-    { "id": "forge_topaz",        "name": "Forge Topaz",        "inputs": [{ "aura": "rage", "count": 3 }],       "money": 300,    "output": { "aura": "topaz", "count": 1 } },
-    { "id": "forge_ruby",         "name": "Forge Ruby",         "inputs": [{ "aura": "topaz", "count": 3 }],      "money": 450,    "output": { "aura": "ruby", "count": 1 } },
-    { "id": "forge_forbidden",    "name": "Forge Forbidden",    "inputs": [{ "aura": "ruby", "count": 3 }],       "money": 650,    "output": { "aura": "forbidden", "count": 1 } },
-    { "id": "forge_emerald",      "name": "Forge Emerald",      "inputs": [{ "aura": "forbidden", "count": 3 }],  "money": 900,    "output": { "aura": "emerald", "count": 1 } },
-    { "id": "forge_gilded",       "name": "Forge Gilded",       "inputs": [{ "aura": "emerald", "count": 3 }],    "money": 1200,   "output": { "aura": "gilded", "count": 1 } },
-    { "id": "forge_jackpot",      "name": "Forge Jackpot",      "inputs": [{ "aura": "gilded", "count": 3 }],     "money": 1600,   "output": { "aura": "jackpot", "count": 1 } },
-    { "id": "forge_sapphire",     "name": "Forge Sapphire",     "inputs": [{ "aura": "jackpot", "count": 3 }],    "money": 2200,   "output": { "aura": "sapphire", "count": 1 } },
-    { "id": "forge_aquamarine",   "name": "Forge Aquamarine",   "inputs": [{ "aura": "sapphire", "count": 3 }],   "money": 3000,   "output": { "aura": "aquamarine", "count": 1 } },
-    { "id": "forge_twilight",     "name": "Forge Twilight",     "inputs": [{ "aura": "aquamarine", "count": 3 }], "money": 4200,   "output": { "aura": "twilight", "count": 1 } },
-    { "id": "forge_clockwork",    "name": "Forge Clockwork",    "inputs": [{ "aura": "twilight", "count": 3 }],   "money": 6000,   "output": { "aura": "clockwork", "count": 1 } },
-    { "id": "forge_nebula",       "name": "Forge Nebula",       "inputs": [{ "aura": "clockwork", "count": 3 }],  "money": 8500,   "output": { "aura": "nebula", "count": 1 } },
-    { "id": "forge_aurora",       "name": "Forge Aurora",       "inputs": [{ "aura": "nebula", "count": 3 }],     "money": 12000,  "output": { "aura": "aurora", "count": 1 } },
-    { "id": "forge_eclipse",      "name": "Forge Eclipse",      "inputs": [{ "aura": "aurora", "count": 3 }],     "money": 17000,  "output": { "aura": "eclipse", "count": 1 } },
-    { "id": "forge_genesis",      "name": "Forge Genesis",      "inputs": [{ "aura": "eclipse", "count": 3 }],    "money": 24000,  "output": { "aura": "genesis", "count": 1 } },
-    { "id": "forge_singularity",  "name": "Forge Singularity",  "inputs": [{ "aura": "genesis", "count": 3 }],    "money": 34000,  "output": { "aura": "singularity", "count": 1 } },
-    { "id": "forge_chronos",      "name": "Forge Chronos",      "inputs": [{ "aura": "singularity", "count": 3 }],"money": 48000,  "output": { "aura": "chronos", "count": 1 } },
-    { "id": "forge_empyrean",     "name": "Forge Empyrean",     "inputs": [{ "aura": "chronos", "count": 3 }],    "money": 68000,  "output": { "aura": "empyrean", "count": 1 } },
-    { "id": "forge_seraph",       "name": "Forge Seraph",       "inputs": [{ "aura": "empyrean", "count": 3 }],   "money": 95000,  "output": { "aura": "seraph", "count": 1 } },
-    { "id": "forge_aeon",         "name": "Forge Aeon",         "inputs": [{ "aura": "seraph", "count": 3 }],     "money": 135000, "output": { "aura": "aeon", "count": 1 } },
-    { "id": "forge_infinity",     "name": "Forge Infinity",     "inputs": [{ "aura": "aeon", "count": 3 }],       "money": 190000, "output": { "aura": "infinity", "count": 1 } },
-    { "id": "forge_primordium",   "name": "Forge Primordium",   "inputs": [{ "aura": "infinity", "count": 3 }],   "money": 270000, "output": { "aura": "primordium", "count": 1 } },
-    { "id": "forge_absolute",     "name": "Forge Absolute",     "inputs": [{ "aura": "primordium", "count": 3 }], "money": 380000, "output": { "aura": "absolute", "count": 1 } },
-    { "id": "forge_transcendence","name": "Forge Transcendence","inputs": [{ "aura": "absolute", "count": 3 }],   "money": 550000, "output": { "aura": "transcendence", "count": 1 } },
+    { "id": "forge_rare",         "name": "Forge Rare",         "inputs": [{ "aura": "uncommon", "count": 3 }],     "output": { "aura": "rare", "count": 1 } },
+    { "id": "forge_divinus",      "name": "Forge Divinus",      "inputs": [{ "aura": "rare", "count": 3 }],     "output": { "aura": "divinus", "count": 1 } },
+    { "id": "forge_crystallized", "name": "Forge Crystallized", "inputs": [{ "aura": "divinus", "count": 3 }],     "output": { "aura": "crystallized", "count": 1 } },
+    { "id": "forge_dizzy",        "name": "Forge Dizzy",        "inputs": [{ "aura": "crystallized", "count": 3 }],    "output": { "aura": "dizzy", "count": 1 } },
+    { "id": "forge_rage",         "name": "Forge Rage",         "inputs": [{ "aura": "dizzy", "count": 3 }],    "output": { "aura": "rage", "count": 1 } },
+    { "id": "forge_topaz",        "name": "Forge Topaz",        "inputs": [{ "aura": "rage", "count": 3 }],    "output": { "aura": "topaz", "count": 1 } },
+    { "id": "forge_ruby",         "name": "Forge Ruby",         "inputs": [{ "aura": "topaz", "count": 3 }],    "output": { "aura": "ruby", "count": 1 } },
+    { "id": "forge_forbidden",    "name": "Forge Forbidden",    "inputs": [{ "aura": "ruby", "count": 3 }],    "output": { "aura": "forbidden", "count": 1 } },
+    { "id": "forge_emerald",      "name": "Forge Emerald",      "inputs": [{ "aura": "forbidden", "count": 3 }],    "output": { "aura": "emerald", "count": 1 } },
+    { "id": "forge_gilded",       "name": "Forge Gilded",       "inputs": [{ "aura": "emerald", "count": 3 }],   "output": { "aura": "gilded", "count": 1 } },
+    { "id": "forge_jackpot",      "name": "Forge Jackpot",      "inputs": [{ "aura": "gilded", "count": 3 }],   "output": { "aura": "jackpot", "count": 1 } },
+    { "id": "forge_sapphire",     "name": "Forge Sapphire",     "inputs": [{ "aura": "jackpot", "count": 3 }],   "output": { "aura": "sapphire", "count": 1 } },
+    { "id": "forge_aquamarine",   "name": "Forge Aquamarine",   "inputs": [{ "aura": "sapphire", "count": 3 }],   "output": { "aura": "aquamarine", "count": 1 } },
+    { "id": "forge_twilight",     "name": "Forge Twilight",     "inputs": [{ "aura": "aquamarine", "count": 3 }],   "output": { "aura": "twilight", "count": 1 } },
+    { "id": "forge_clockwork",    "name": "Forge Clockwork",    "inputs": [{ "aura": "twilight", "count": 3 }],   "output": { "aura": "clockwork", "count": 1 } },
+    { "id": "forge_nebula",       "name": "Forge Nebula",       "inputs": [{ "aura": "clockwork", "count": 3 }],   "output": { "aura": "nebula", "count": 1 } },
+    { "id": "forge_aurora",       "name": "Forge Aurora",       "inputs": [{ "aura": "nebula", "count": 3 }],  "output": { "aura": "aurora", "count": 1 } },
+    { "id": "forge_eclipse",      "name": "Forge Eclipse",      "inputs": [{ "aura": "aurora", "count": 3 }],  "output": { "aura": "eclipse", "count": 1 } },
+    { "id": "forge_genesis",      "name": "Forge Genesis",      "inputs": [{ "aura": "eclipse", "count": 3 }],  "output": { "aura": "genesis", "count": 1 } },
+    { "id": "forge_singularity",  "name": "Forge Singularity",  "inputs": [{ "aura": "genesis", "count": 3 }],  "output": { "aura": "singularity", "count": 1 } },
+    { "id": "forge_chronos",      "name": "Forge Chronos",      "inputs": [{ "aura": "singularity", "count": 3 }],  "output": { "aura": "chronos", "count": 1 } },
+    { "id": "forge_empyrean",     "name": "Forge Empyrean",     "inputs": [{ "aura": "chronos", "count": 3 }],  "output": { "aura": "empyrean", "count": 1 } },
+    { "id": "forge_seraph",       "name": "Forge Seraph",       "inputs": [{ "aura": "empyrean", "count": 3 }],  "output": { "aura": "seraph", "count": 1 } },
+    { "id": "forge_aeon",         "name": "Forge Aeon",         "inputs": [{ "aura": "seraph", "count": 3 }], "output": { "aura": "aeon", "count": 1 } },
+    { "id": "forge_infinity",     "name": "Forge Infinity",     "inputs": [{ "aura": "aeon", "count": 3 }], "output": { "aura": "infinity", "count": 1 } },
+    { "id": "forge_primordium",   "name": "Forge Primordium",   "inputs": [{ "aura": "infinity", "count": 3 }], "output": { "aura": "primordium", "count": 1 } },
+    { "id": "forge_absolute",     "name": "Forge Absolute",     "inputs": [{ "aura": "primordium", "count": 3 }], "output": { "aura": "absolute", "count": 1 } },
+    { "id": "forge_transcendence","name": "Forge Transcendence","inputs": [{ "aura": "absolute", "count": 3 }], "output": { "aura": "transcendence", "count": 1 } },
 
-    { "id": "brew_luck_elixir",   "name": "Brew Luck Elixir",   "inputs": [{ "aura": "gilded", "count": 2 }, { "aura": "nebula", "count": 1 }], "money": 5000,  "output": { "item": "luckElixir", "count": 1 } },
-    { "id": "brew_fortune_charm", "name": "Brew Fortune Charm", "inputs": [{ "aura": "aurora", "count": 2 }, { "aura": "eclipse", "count": 1 }], "money": 25000, "output": { "item": "fortuneCharm", "count": 1 } },
-    { "id": "brew_essence_surge", "name": "Distill Essence Surge","inputs": [{ "aura": "jackpot", "count": 3 }], "money": 1500,  "output": { "item": "essenceSurge", "count": 1 } }
-  ]
+    { "id": "brew_luck_elixir",   "name": "Brew Luck Elixir",   "inputs": [{ "aura": "gilded", "count": 2 }, { "aura": "nebula", "count": 1 }],  "output": { "item": "luckElixir", "count": 1 } },
+    { "id": "brew_fortune_charm", "name": "Brew Fortune Charm", "inputs": [{ "aura": "aurora", "count": 2 }, { "aura": "eclipse", "count": 1 }], "output": { "item": "fortuneCharm", "count": 1 } },
+    { "id": "brew_essence_surge", "name": "Distill Essence Surge","inputs": [{ "aura": "jackpot", "count": 3 }],  "output": { "item": "essenceSurge", "count": 1 } },
+
+    { "id": "seal_reliquary", "name": "Seal Reliquary", "inputs": [{ "aura": "nebula", "count": 4 }, { "aura": "verdict", "count": 2 }],   "money": 1000,    "output": { "aura": "reliquary", "count": 1 } },
+    { "id": "sign_covenant",  "name": "Sign Covenant",  "inputs": [{ "aura": "genesis", "count": 3 }, { "aura": "reliquary", "count": 1 }], "money": 500000,   "output": { "aura": "covenant",  "count": 1 } },
+    { "id": "raise_monolith", "name": "Raise Monolith", "inputs": [{ "aura": "primordium", "count": 2 }, { "aura": "covenant", "count": 1 }], "money": 6000000, "output": { "aura": "monolith",  "count": 1 } },
+
+    { "id": "brew_heavenly_potion",   "name": "Brew Heavenly Potion",   "inputs": [{ "aura": "seraph", "count": 2 }, { "aura": "infinity", "count": 1 }], "money": 250000,  "output": { "item": "heavenlyPotion",   "count": 1 } },
+    { "id": "brew_heavenly_potion_ii","name": "Brew Heavenly Potion II","inputs": [{ "item": "heavenlyPotion", "count": 2 }, { "aura": "absolute", "count": 1 }], "money": 1000000, "output": { "item": "heavenlyPotionII", "count": 1 } },
+
+    { "id": "craft_luck_glove",     "name": "Craft Luck Glove",      "inputs": [{ "aura": "topaz", "count": 5 },     { "aura": "ruby", "count": 2 }],   "output": { "gear": "luck_glove",     "qualities": { "worn": 30, "fine": 48, "radiant": 18, "mythic": 4 } } },
+    { "id": "craft_speed_gauntlet", "name": "Craft Speed Gauntlet",  "inputs": [{ "aura": "forbidden", "count": 4 }, { "aura": "emerald", "count": 3 }],   "output": { "gear": "speed_gauntlet", "qualities": { "worn": 28, "fine": 48, "radiant": 20, "mythic": 4 } } },
+    { "id": "craft_gilded_ring",    "name": "Craft Gilded Ring",     "inputs": [{ "aura": "gilded", "count": 6 },    { "aura": "jackpot", "count": 2 }],  "output": { "gear": "gilded_ring",    "qualities": { "worn": 28, "fine": 47, "radiant": 20, "mythic": 5 } } },
+    { "id": "craft_essence_crown",  "name": "Craft Essence Crown",   "inputs": [{ "aura": "sapphire", "count": 5 },  { "aura": "aquamarine", "count": 3 }],  "output": { "gear": "essence_crown",  "qualities": { "worn": 26, "fine": 46, "radiant": 22, "mythic": 6 } } },
+    { "id": "craft_swift_boots",    "name": "Craft Swift Boots",     "inputs": [{ "aura": "twilight", "count": 4 },  { "aura": "clockwork", "count": 2 }],  "output": { "gear": "swift_boots",    "qualities": { "worn": 26, "fine": 45, "radiant": 23, "mythic": 6 } } },
+    { "id": "craft_chrono_talisman","name": "Craft Chrono Talisman", "inputs": [{ "aura": "nebula", "count": 4 },    { "aura": "aurora", "count": 2 }], "output": { "gear": "chrono_talisman","qualities": { "worn": 24, "fine": 44, "radiant": 24, "mythic": 8 } } }
+  ],
+
+  "gear": {
+    "salvage": { "base": 900 },
+
+    "slots": [
+      { "id": "hands",   "name": "Hands",   "icon": "🧤" },
+      { "id": "head",    "name": "Head",    "icon": "👑" },
+      { "id": "feet",    "name": "Feet",    "icon": "👟" },
+      { "id": "trinket", "name": "Trinket", "icon": "🧿" }
+    ],
+
+    "buffTypes": {
+      "luck":     { "name": "Luck",           "icon": "🍀", "kind": "pct",  "stat": "Luck" },
+      "cooldown": { "name": "Roll Speed",     "icon": "⚡", "kind": "pct",  "stat": "Cooldown" },
+      "essence":  { "name": "Essence",        "icon": "💠", "kind": "pct",  "stat": "Essence" },
+      "sell":     { "name": "Sale Price",     "icon": "💰", "kind": "pct",  "stat": "Money" },
+      "rolls":    { "name": "Auras per Roll", "icon": "🎲", "kind": "flat", "stat": "Rolls" },
+      "auto":     { "name": "Auto Rolls / s", "icon": "🤖", "kind": "flat", "stat": "Auto" }
+    },
+
+    "qualities": [
+      { "id": "worn",    "name": "Worn",    "color": "#9ca3af", "power": 0.7,  "value": 0.6, "buffs": { "min": 2, "max": 2 } },
+      { "id": "fine",    "name": "Fine",    "color": "#4ade80", "power": 1,    "value": 1,   "buffs": { "min": 2, "max": 3 } },
+      { "id": "radiant", "name": "Radiant", "color": "#60a5fa", "power": 1.35, "value": 1.9, "buffs": { "min": 3, "max": 4 } },
+      { "id": "mythic",  "name": "Mythic",  "color": "#c084fc", "power": 1.8,  "value": 3.6, "buffs": { "min": 4, "max": 5 } }
+    ],
+
+    "pieces": [
+      {
+        "id": "luck_glove",
+        "name": "Luck Glove",
+        "icon": "🧤",
+        "slot": "hands",
+        "desc": "Stitched from Topaz thread. Every roll lands a little luckier than it should.",
+        "buffs": [
+          { "type": "luck",     "min": 0.06, "max": 0.30, "roll": 0.95, "signature": true },
+          { "type": "essence",  "min": 0.05, "max": 0.22 },
+          { "type": "sell",     "min": 0.06, "max": 0.28 },
+          { "type": "cooldown", "min": 0.03, "max": 0.12 }
+        ]
+      },
+      {
+        "id": "speed_gauntlet",
+        "name": "Speed Gauntlet",
+        "icon": "⚡",
+        "slot": "hands",
+        "desc": "Forbidden plating that will not let your hand rest. Rolls come back faster.",
+        "buffs": [
+          { "type": "cooldown", "min": 0.08, "max": 0.35, "signature": true },
+          { "type": "luck",     "min": 0.03, "max": 0.14 },
+          { "type": "rolls",    "min": 1,    "max": 2 },
+          { "type": "auto",     "min": 1,    "max": 2 }
+        ]
+      },
+      {
+        "id": "gilded_ring",
+        "name": "Gilded Ring",
+        "icon": "💍",
+        "slot": "trinket",
+        "desc": "A merchant's habit of never selling a good aura cheap.",
+        "buffs": [
+          { "type": "sell",    "min": 0.10, "max": 0.45, "signature": true },
+          { "type": "luck",    "min": 0.03, "max": 0.16 },
+          { "type": "essence", "min": 0.05, "max": 0.24 },
+          { "type": "cooldown", "min": 0.03, "max": 0.12 }
+        ]
+      },
+      {
+        "id": "essence_crown",
+        "name": "Essence Crown",
+        "icon": "👑",
+        "slot": "head",
+        "desc": "Distils the spare light of every aura you pull straight into essence.",
+        "buffs": [
+          { "type": "essence", "min": 0.10, "max": 0.45, "signature": true },
+          { "type": "luck",    "min": 0.04, "max": 0.18 },
+          { "type": "sell",    "min": 0.06, "max": 0.25 },
+          { "type": "cooldown", "min": 0.03, "max": 0.11 }
+        ]
+      },
+      {
+        "id": "swift_boots",
+        "name": "Swift Boots",
+        "icon": "👟",
+        "slot": "feet",
+        "desc": "Clockwork soles. The rolling never stops, even when you are reading the bestiary.",
+        "buffs": [
+          { "type": "auto",     "min": 1, "max": 3, "signature": true },
+          { "type": "cooldown", "min": 0.06, "max": 0.28 },
+          { "type": "luck",     "min": 0.02, "max": 0.10 },
+          { "type": "essence",  "min": 0.03, "max": 0.14 }
+        ]
+      },
+      {
+        "id": "chrono_talisman",
+        "name": "Chrono Talisman",
+        "icon": "⏳",
+        "slot": "trinket",
+        "desc": "Bends one roll into several. The auras arrive out of order, but they arrive.",
+        "buffs": [
+          { "type": "rolls",    "min": 1,    "max": 2, "signature": true },
+          { "type": "cooldown", "min": 0.05, "max": 0.22 },
+          { "type": "luck",     "min": 0.04, "max": 0.20 },
+          { "type": "auto",     "min": 1,    "max": 2 },
+          { "type": "essence",  "min": 0.04, "max": 0.16 }
+        ]
+      }
+    ]
+  }
 }

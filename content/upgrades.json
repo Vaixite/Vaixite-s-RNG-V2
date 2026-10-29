@@ -1,15 +1,17 @@
 {
   "ascend": {
-    "requirementBase": 25,
-    "requirementGrowth": 6,
-    "luckPerAscension": 0.75
+    "comment": "Ascending costs rolls: requirementBase rolls for the first ascension, multiplied by requirementGrowth for every one after. Ascending then burns your essence stash into Ascend Points (the upgrade tree currency): sqrt(essence / pointEssenceDiv), always at least 1 — the fatter the stash, the more points it converts to. Money is never touched by ascending.",
+    "requirementBase": 250,
+    "requirementGrowth": 4,
+    "luckPerAscension": 0.5,
+    "pointEssenceDiv": 10
   },
   "upgrades": [
     {
       "id": "luck",
       "name": "Fortune",
       "icon": "🍀",
-      "desc": "+25% Luck per level. Lowers the effective rarity of every aura.",
+      "desc": "+25% Luck per level. Luck multiplies the RNG — every aura rarer than 1 in your luck stays rollable, everything below it is filtered out.",
       "baseCost": 50,
       "growth": 1.55,
       "max": 0,
@@ -39,7 +41,7 @@
       "id": "autoroll",
       "name": "Auto Roll",
       "icon": "🤖",
-      "desc": "Rolls by itself, even while the tab is in the background.",
+      "desc": "+1 auto-roll per second on top of the free one. Rolls even while the tab is in the background.",
       "baseCost": 2500,
       "growth": 2.6,
       "max": 10,

@@ -6,12 +6,20 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createDb } from './src/db.js';
 import { createContentLoader } from './src/content.js';
+import { createAdminLoader } from './src/admins.js';
 import { createRateLimiter } from './src/auth.js';
 import { handleApi } from './src/api.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const PUBLIC_DIR = path.join(__dirname, 'public');
-const DATA_FILE = path.join(__dirname, 'data', 'db.json');
+// DATA_FILE / ADMINS_FILE exist so the test suite can run a throwaway server
+// against throwaway files instead of the live database.
+const DATA_FILE = process.env.DATA_FILE
+  ? path.resolve(process.env.DATA_FILE)
+  : path.join(__dirname, 'data', 'db.json');
+const ADMINS_FILE = process.env.ADMINS_FILE
+  ? path.resolve(process.env.ADMINS_FILE)
+  : path.join(__dirname, 'admins.json');
 const CONTENT_DIR = path.join(__dirname, 'content');
 const PORT = Number(process.env.PORT) || 3000;
 // 0.0.0.0 by default so friends on the network can join; HOST=127.0.0.1 to
@@ -39,6 +47,10 @@ const contentLoader = createContentLoader(CONTENT_DIR);
 const mem = {
   guests: {},            // playerId -> player
   sessions: new Map(),   // token  -> { playerId, createdAt, expiresAt }
+  // World override set from the admin panel: { id, until } or null.
+  biomeOverride: null,
+  // Rolling audit trail of admin actions (in memory, capped).
+  adminLog: [],
 };
 
 const ctx = {
@@ -49,6 +61,8 @@ const ctx = {
   get content() {
     return contentLoader.get();
   },
+  // Hot-reloaded admin allowlist from admins.json (checked every ~2s).
+  admins: createAdminLoader(ADMINS_FILE),
 };
 
 // --- static files ----------------------------------------------------------
@@ -86,8 +100,10 @@ async function serveStatic(req, res, pathname) {
       'content-type': MIME[ext] || 'application/octet-stream',
       'content-length': stat.size,
       etag,
-      // HTML must never go stale or a reload after an update shows the old game.
-      'cache-control': ext === '.html' ? 'no-cache' : 'public, max-age=300',
+      // Nothing may go stale: every load revalidates against the ETag above,
+      // so an unchanged file costs a 304 and a changed one shows up on the
+      // very next refresh — no hard-reload dance after an update.
+      'cache-control': 'no-cache',
     });
     fs.createReadStream(filePath).pipe(res);
   } catch {
@@ -152,8 +168,10 @@ process.on('unhandledRejection', (e) => console.error('[unhandled]', e));
 // Safety net: persist every 15s even if the process is killed hard.
 setInterval(() => db.save().catch(() => {}), 15000).unref();
 
-// Fail fast on broken content files at startup.
+// Fail fast on broken content files at startup; warm the admin list (a missing
+// admins.json is fine — it just means nobody is an admin yet).
 contentLoader.get();
+ctx.admins.get();
 
 server.listen(PORT, HOST, () => {
   const players = Object.keys(db.data.players).length;

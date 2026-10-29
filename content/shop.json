@@ -28,6 +28,22 @@
       "desc": "Instantly gain 750 essence.",
       "buyPrice": 12000,
       "effect": { "type": "essence", "amount": 750 }
+    },
+    {
+      "id": "heavenlyPotion",
+      "name": "Heavenly Potion",
+      "icon": "✨",
+      "desc": "+150,000 Luck on your next roll. No timer — it waits in the bottle until you actually roll.",
+      "buyPrice": 1500000,
+      "effect": { "type": "nextRollLuck", "add": 150000, "rolls": 1 }
+    },
+    {
+      "id": "heavenlyPotionII",
+      "name": "Heavenly Potion II",
+      "icon": "🌟",
+      "desc": "+1,500,000 Luck on your next roll. Brewing two Heavenly Potions with an Absolute is far cheaper than the price.",
+      "buyPrice": 30000000,
+      "effect": { "type": "nextRollLuck", "add": 1500000, "rolls": 1 }
     }
   ]
 }

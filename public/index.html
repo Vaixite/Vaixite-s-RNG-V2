@@ -4,14 +4,16 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <title>Vaixite's RNG V2</title>
-<meta name="description" content="Roll auras. Chase breakthroughs. Climb the leaderboard." />
+<meta name="description" content="Roll auras. Sell them. Craft rarer ones and multi-buff gear. Climb the global leaderboard." />
 <meta name="theme-color" content="#080a13" />
 <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-<link rel="stylesheet" href="/css/game.css" />
+<link rel="stylesheet" href="/css/game.css?v=4" />
 </head>
 <body>
 <!-- Biome tint washes the whole page; driven by --sky-a / --sky-b -->
 <div id="sky" aria-hidden="true"></div>
+<!-- Slow brand-coloured aurora blobs drifting behind everything -->
+<div id="aurora" aria-hidden="true"><i></i><i></i><i></i></div>
 <div id="stars" aria-hidden="true"></div>
 
 <header class="topbar">
@@ -34,8 +36,21 @@
   <nav class="tabs" id="tabs">
     <button class="tab is-active" data-view="inventory">Inventory</button>
     <button class="tab" data-view="bestiary">Bestiary</button>
+    <button class="tab" data-view="crafting">Crafting</button>
+    <button class="tab" data-view="gear">Gear</button>
     <button class="tab" data-view="upgrades">Upgrades</button>
-    <button class="tab" data-view="leaderboard">Leaderboard</button>
+    <button class="tab" data-view="shop">Shop</button>
+    <button class="tab" data-view="mining" id="tabMining" style="display:none">Mining</button>
+    <button class="tab" data-view="clicker" id="tabClicker" style="display:none">Clicker</button>
+    <button class="tab" data-view="tree" id="tabTree" style="display:none">Tree</button>
+    <!-- The badge counts badges, not notifications: it is what you have, so it
+         is never a thing you have to clear. -->
+    <button class="tab" data-view="achievements" id="tabAchievements">
+      Achievements <span class="tab-badge" id="achBadge" title="Achievement Points earned"></span>
+    </button>
+    <button class="tab" data-view="leaderboard">Board</button>
+    <!-- Only ever shown when the server says this account is on admins.json. -->
+    <button class="tab tab-admin" data-view="admin" id="tabAdmin" style="display:none">Admin</button>
   </nav>
 </header>
 
@@ -46,14 +61,25 @@
     <div class="feed" id="feed" aria-live="polite"><p class="muted">Waiting for rolls…</p></div>
   </aside>
 
+  <!-- drag to resize the feed column; double-click resets -->
+  <div class="gutter" id="gutterFeed" title="Drag to resize · double-click to reset" aria-hidden="true"></div>
+
   <!-- ---------- centre: the roll ---------- -->
   <section class="panel panel-roll">
     <div class="hud">
-      <div class="hud-item"><small>Luck</small><strong id="hudLuck">1×</strong></div>
+      <div class="hud-item">
+        <small>Luck</small>
+        <strong id="hudLuck">1×</strong>
+        <span class="luck-off" id="luckOffChip" hidden>luck off</span>
+      </div>
+      <div class="hud-item"><small>Money</small><strong id="hudMoney" class="money">0</strong></div>
       <div class="hud-item"><small>Essence</small><strong id="hudEssence">0</strong></div>
       <div class="hud-item"><small>Rolls</small><strong id="hudRolls">0</strong></div>
+      <div class="hud-item"><small>Lifetime</small><strong id="hudLifetime">0</strong></div>
       <div class="hud-item"><small>Best</small><strong id="hudBest">—</strong></div>
     </div>
+
+    <div class="buffs" id="buffs" aria-live="polite"></div>
 
     <div class="roller" id="roller">
       <div class="aura-stage" id="auraStage">
@@ -61,6 +87,16 @@
         <div class="aura-name" id="auraName">Press Roll</div>
         <div class="aura-odds" id="auraOdds">every aura has a 1 in N chance</div>
         <div class="aura-tags" id="auraTags"></div>
+        <div class="orb-row" id="orbRow" aria-hidden="true"></div>
+      </div>
+
+      <!-- Slot-machine roulette: only on screen while a roll is in flight. The
+           strip is filled and moved by rollfx.js; it lands on the real result
+           before anything is painted on the stage. -->
+      <div class="roulette" id="roulette" aria-hidden="true">
+        <div class="rr-window" id="rrWindow">
+          <div class="rr-strip" id="rrStrip"></div>
+        </div>
       </div>
     </div>
 
@@ -71,12 +107,26 @@
     </button>
 
     <div class="quick-row">
-      <label class="switch"><input type="checkbox" id="autoToggle" /><span>Auto Roll</span></label>
+      <label class="switch" title="Auto roll is free for everyone — the upgrade and the Ascend Tree stack on top.">
+        <input type="checkbox" id="autoToggle" /><span>Auto Roll</span>
+        <span class="pill free-pill">free</span>
+      </label>
+
+      <button class="quick-btn" id="quickToggle" aria-pressed="false" disabled>⏩ Quick Roll</button>
+
+      <button class="ghost-btn gear-btn" id="settingsBtn" aria-haspopup="dialog" aria-expanded="false" title="Settings">⚙</button>
+
       <span class="spacer"></span>
-      <button class="ghost-btn" id="renameBtn">Rename</button>
-      <button class="ghost-btn" id="resetBtn">Delete &amp; switch</button>
+      <div class="account" id="accountBar">
+        <button class="ghost-btn" id="renameBtn">Rename</button>
+        <button class="ghost-btn" id="logoutBtn">Log out</button>
+        <button class="ghost-btn danger" id="deleteBtn">Delete</button>
+      </div>
     </div>
   </section>
+
+  <!-- drag to resize the side column; double-click resets -->
+  <div class="gutter" id="gutterSide" title="Drag to resize · double-click to reset" aria-hidden="true"></div>
 
   <!-- ---------- right: collection + upgrades ---------- -->
   <aside class="panel panel-side">
@@ -86,6 +136,7 @@
         <span id="collectCount">0 / 0</span>
       </div>
       <div class="progress"><i id="collectBar"></i></div>
+      <p class="muted small" id="lifetimeInfo">Lifetime rolls: 0</p>
       <p class="muted small" id="ascendInfo"></p>
     </div>
 
@@ -95,27 +146,110 @@
 
 <!-- cutscene overlay for EPIC and above -->
 <div class="cutscene" id="cutscene" aria-hidden="true">
+  <div class="cutscene-fog cutscene-fog-a" aria-hidden="true"></div>
+  <div class="cutscene-fog cutscene-fog-b" aria-hidden="true"></div>
+  <div class="cutscene-rays" aria-hidden="true"></div>
+  <div class="cutscene-shock" aria-hidden="true"></div>
   <div class="cutscene-star" id="cutsceneStar"></div>
   <div class="cutscene-body">
     <div class="cutscene-tier" id="cutsceneTier"></div>
     <div class="cutscene-name" id="cutsceneName"></div>
     <div class="cutscene-odds" id="cutsceneOdds"></div>
   </div>
+  <div class="cutscene-vignette" aria-hidden="true"></div>
+</div>
+
+<!-- ascension takeover: played once per successful ascend -->
+<div class="ascend-fx" id="ascendFx" aria-hidden="true">
+  <div class="af-flash"></div>
+  <div class="af-ring af-r1"></div>
+  <div class="af-ring af-r2"></div>
+  <div class="af-ring af-r3"></div>
+  <div class="af-word">ASCENSION</div>
+  <div class="af-sparks" aria-hidden="true">
+    <span style="--dx:-26vw;--d:0s">✦</span>
+    <span style="--dx:-14vw;--d:.22s">✦</span>
+    <span style="--dx:-5vw;--d:.44s">✦</span>
+    <span style="--dx:6vw;--d:.12s">✦</span>
+    <span style="--dx:17vw;--d:.36s">✦</span>
+    <span style="--dx:28vw;--d:.58s">✦</span>
+  </div>
+</div>
+
+<!-- the Ascend Tree: a full-screen constellation, not a side panel -->
+<div class="tree-overlay" id="treeOverlay" aria-hidden="true">
+  <div class="tree-head">
+    <div class="tree-title"><span>✦</span> Ascend Tree</div>
+    <div class="tree-points" id="treePoints" title="Ascend Points — earned by ascending, spent here forever.">✦ 0</div>
+    <div class="tree-zoom" role="group" aria-label="Zoom">
+      <button class="ghost-btn" id="treeZoomOut" title="Zoom out">−</button>
+      <button class="ghost-btn" id="treeZoomReset" title="Reset zoom">⤾</button>
+      <button class="ghost-btn" id="treeZoomIn" title="Zoom in">+</button>
+    </div>
+    <button class="tree-return" id="treeReturn">← Return to World</button>
+  </div>
+  <div class="tree-scroll">
+    <div class="tree-canvas" id="treeCanvas"></div>
+  </div>
+  <p class="tree-hint">Nodes light up when their prerequisite is owned. Click a node to buy the next level — the tree is permanent and survives every ascension.</p>
+  <div class="tree-tip" id="treeTip" aria-hidden="true"></div>
 </div>
 
 <div class="toasts" id="toasts"></div>
 
-<!-- account picker, shown on first visit -->
-<div class="modal" id="joinModal" aria-hidden="true">
-  <div class="modal-card">
-    <h2>Welcome to Vaixite's RNG V2</h2>
-    <p>Pick a name and start rolling auras. Rarer auras are a bigger number —
-      <b>1/2</b> is common, <b>1/134,217,728</b> will end you.</p>
-    <form id="joinForm">
-      <input id="joinName" maxlength="18" placeholder="your name" autocomplete="off" autofocus />
-      <button type="submit">Start rolling</button>
+<!-- settings — a real modal, because a popover near the screen edge gets clipped -->
+<div class="modal" id="settingsModal" aria-hidden="true">
+  <div class="modal-card settings-card" role="dialog" aria-label="Settings">
+    <div class="pop-title">Settings</div>
+    <label class="pop-row">
+      <span class="pr-text">Show true luck odds<b class="pr-hint">Live 1-in-N after luck, biome and the luck floor</b></span>
+      <input type="checkbox" id="setTrueOdds" />
+    </label>
+    <label class="pop-row">
+      <span class="pr-text">Luck enabled<b class="pr-hint">Off rolls against the authored table at 1× luck</b></span>
+      <input type="checkbox" id="setLuck" />
+    </label>
+    <label class="pop-row">
+      <span class="pr-text">Cutscene from<b class="pr-hint">The full-screen takeover only plays at this rarity and above</b></span>
+      <select id="setCutscene" class="pop-select"></select>
+    </label>
+    <button type="button" class="ghost-btn wide" id="settingsClose">Close</button>
+  </div>
+</div>
+
+<!-- aura details — opened by clicking any aura in the Bestiary -->
+<div class="modal" id="auraModal" aria-hidden="true">
+  <div class="modal-card aura-card" id="auraModalCard" role="dialog" aria-label="Aura details"></div>
+</div>
+
+<!-- sign in / create account / play as guest -->
+<div class="modal" id="authModal" aria-hidden="true">
+  <div class="modal-card auth-card">
+    <h2>Vaixite's RNG V2</h2>
+    <p>Roll auras, sell them for money, craft rarer ones, forge gear that carries
+      several buffs at once and chase
+      <b>1/134,217,728</b>. An account keeps your progress on the server; a guest does not.</p>
+
+    <div class="auth-tabs">
+      <button type="button" class="auth-tab is-active" data-mode="login">Log in</button>
+      <button type="button" class="auth-tab" data-mode="register">Create account</button>
+    </div>
+
+    <form id="authForm">
+      <input id="authUser" maxlength="18" placeholder="username" autocomplete="username" spellcheck="false" autofocus />
+      <input id="authPass" type="password" placeholder="password" autocomplete="current-password" />
+      <button type="submit" id="authSubmit">Log in</button>
     </form>
-    <p class="muted small">Progress is stored in the local JSON database on this machine.</p>
+
+    <p class="auth-error" id="authError" role="alert"></p>
+
+    <div class="auth-or"><span>or</span></div>
+    <button type="button" class="ghost-btn wide" id="guestBtn">Play as a guest</button>
+
+    <p class="muted small">
+      Guests get a random name like <b>guest-4821</b> and are <b>never saved</b> — a server restart wipes them.
+      Passwords are salted and hashed with scrypt; the server never stores or logs the plain text.
+    </p>
   </div>
 </div>
 

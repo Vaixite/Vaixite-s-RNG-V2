@@ -7,6 +7,32 @@
   "sessionDays": 30,
   "feedLimit": 60,
   "feedOddsThreshold": 1000,
+  "feedTtl": {
+    "comment": "How long a roll stays on the world feed at all — 600000 is ten minutes. The feed is a ticker, not a ledger: without this the 60-entry cap is the only thing that ever clears it, so on a quiet day the page still greets you with last week's rolls. A pull still holding its pin (feedPin) is never cut while it holds; it leaves with the next prune once its window is up. Staff announcements are not rolls, so they stay until the cap pushes them out — set keepAnnouncements false to sweep them on the same clock.",
+    "ms": 600000,
+    "keepAnnouncements": true
+  },
+  "feedPin": {
+    "comment": "How long a pull holds the top of the world feed, by how rare it was. The entry keeps the highest tier it clears; when that window expires it just drops back into the chronological list.",
+    "tiers": [
+      { "minOdds": 1000, "holdMs": 120000 },
+      { "minOdds": 10000, "holdMs": 600000 },
+      { "minOdds": 100000, "holdMs": 1800000 },
+      { "minOdds": 1000000, "holdMs": 3600000 }
+    ]
+  },
+  "feedTierBg": {
+    "comment": "World-feed rows at or above this 1-in-N get painted in their rarity tier colour instead of the plain row background.",
+    "minOdds": 1000
+  },
+  "freeAutoRoll": {
+    "comment": "Everyone gets this many auto-rolls per second for free. The Auto Roll upgrade stacks on top of it.",
+    "perSec": 1
+  },
+  "quickRoll": {
+    "comment": "The Quick Roll toggle (skip the roll animation) unlocks once the player has rolled this many times in their lifetime.",
+    "unlockRolls": 100
+  },
   "maxRollsPerRequest": 32,
   "loginRate": { "max": 10, "windowMs": 60000 }
 }

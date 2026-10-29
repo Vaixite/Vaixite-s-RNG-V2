@@ -1,0 +1,8 @@
+
+  Booting the client bundle against http://127.0.0.1:3000
+
+  #who        → signed in as Smokemvsp1mjx · first roll awaits
+  #hudLuck    → 1.00×
+  #hudMoney   → 0
+  #hudEssence → 0
+  #biomeName  → THE GALES

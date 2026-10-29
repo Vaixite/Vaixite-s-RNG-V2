@@ -1,6 +1,7 @@
 import fs from 'node:fs';
 import fsp from 'node:fs/promises';
 import path from 'node:path';
+import { baseCounters } from './achievements.js';
 
 // ---------------------------------------------------------------------------
 // JSON DATABASE
@@ -19,6 +20,7 @@ const EMPTY = {
   version: SCHEMA_VERSION,
   createdAt: 0,
   players: {},
+  legacy: {},
   sessions: {},
   feed: [],
   meta: {
@@ -85,14 +87,76 @@ export class JsonDb {
     return this.data;
   }
 
+  // v1 → v2: accounts now carry a salted password hash and players gained a
+  // money / items / buffs economy. Old records are filled in with the new
+  // fields; anything that predates passwords is moved aside into `legacy`
+  // rather than deleted — it can never sign in again, but nothing is lost.
+  // Later fields (gear, equipped) are filled in here too, so an old save keeps
+  // loading without a version bump.
   _migrate(parsed) {
     const next = structuredClone(EMPTY);
     const merged = { ...next, ...parsed };
     merged.meta = { ...next.meta, ...(parsed.meta || {}) };
-    merged.players = parsed.players || {};
-    merged.sessions = parsed.sessions || {};
+    merged.sessions = parsed.sessions && typeof parsed.sessions === 'object' ? parsed.sessions : {};
     merged.feed = Array.isArray(parsed.feed) ? parsed.feed : [];
+    merged.legacy = { ...(parsed.legacy || {}) };
     merged.version = SCHEMA_VERSION;
+
+    const players = {};
+    let moved = 0;
+    for (const [id, p] of Object.entries(parsed.players || {})) {
+      if (!p || typeof p !== 'object') continue;
+      if (!p.passwordHash) {
+        merged.legacy[id] = { ...p, note: 'pre-password profile — cannot sign in' };
+        moved++;
+        continue;
+      }
+      p.id = id;
+      p.essence = Number(p.essence) || 0;
+      p.money = Number(p.money) || 0;
+      p.totalRolls = Number(p.totalRolls) || 0;
+      p.ascensions = Number(p.ascensions) || 0;
+      p.levels = { luck: 0, quickroll: 0, multiroll: 0, autoroll: 0, essence: 0, ...(p.levels || {}) };
+      p.inventory = p.inventory && typeof p.inventory === 'object' ? p.inventory : {};
+      p.items = p.items && typeof p.items === 'object' ? p.items : {};
+      p.buffs = Array.isArray(p.buffs) ? p.buffs.filter((b) => b && b.until > 0) : [];
+      // Gear arrived after the first saves: fill the fields, then drop any slot
+      // pointing at a piece the player does not own — a dangling pointer would
+      // light up a buff nobody can see or unequip.
+      p.gear = Array.isArray(p.gear)
+        ? p.gear.filter((g) => g && g.uid && g.pieceId && Array.isArray(g.buffs))
+        : [];
+      p.equipped = p.equipped && typeof p.equipped === 'object' ? p.equipped : {};
+      const owned = new Set(p.gear.map((g) => g.uid));
+      for (const [slot, uid] of Object.entries(p.equipped)) {
+        if (!owned.has(uid)) delete p.equipped[slot];
+      }
+      // Achievements measure a lifetime, and a lifetime starts before the
+      // feature did. Anything the tallies cannot reconstruct — how many rocks
+      // you opened, how many bottles you drank — simply starts counting today;
+      // anything the record still shows (levels, collection, ascensions) needs
+      // no back-fill at all, because the metric reads it live.
+      p.counters = { ...baseCounters(), ...(p.counters || {}) };
+      p.counters.ores = p.counters.ores && typeof p.counters.ores === 'object' ? p.counters.ores : {};
+      p.biomesSeen = p.biomesSeen && typeof p.biomesSeen === 'object' ? p.biomesSeen : {};
+      p.achievements = p.achievements && typeof p.achievements === 'object' ? p.achievements : {};
+      players[id] = p;
+    }
+    merged.players = players;
+
+    // Sessions pointing at a player that no longer exists are dead weight.
+    for (const token of Object.keys(merged.sessions)) {
+      if (!players[merged.sessions[token]?.playerId]) delete merged.sessions[token];
+    }
+
+    // Only warn when this load actually moved someone. Counting the whole
+    // legacy bucket instead made every boot look like a migration had run.
+    const parked = Object.keys(merged.legacy).length;
+    if (moved) {
+      console.warn(`[db] moved ${moved} pre-password profile(s) to "legacy" — kept, but they cannot sign in`);
+    } else if (parked) {
+      console.log(`[db] ${parked} pre-password profile(s) parked in "legacy" (cannot sign in)`);
+    }
     return merged;
   }
 
@@ -158,4 +222,11 @@ export function createDb(file) {
   const db = new JsonDb(file);
   db.load();
   return db;
+}
+
+/** A pristine database object — used by scripts/reset-db.js. */
+export function emptyDb() {
+  const fresh = structuredClone(EMPTY);
+  fresh.createdAt = Date.now();
+  return fresh;
 }

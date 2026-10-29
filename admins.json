@@ -1,0 +1,11 @@
+{
+  "//": [
+    "Admin allowlist — put the username of a player here and they get the in-game Admin panel.",
+    "Case-insensitive. Hot-reloaded: save the file and it applies within ~2 seconds, no restart.",
+    "Only real accounts can be admins — guests are never saved, so they can never be trusted with it.",
+    "Shapes accepted: [\"name\", ...] or { \"admins\": [\"name\", ...] } or { \"admins\": [{ \"name\": \"name\" }] }.",
+    "This file is owned by the machine: no HTTP route can write it. Edit it here, in the editor.",
+    "Remove a name to revoke the panel immediately."
+  ],
+  "admins": ["Vaixite"]
+}

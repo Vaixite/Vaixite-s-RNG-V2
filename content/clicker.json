@@ -1,0 +1,45 @@
+{
+  "comment": "THE SPARK CLICKER — a side minigame of its own, unlocked by the Arcade Cabinet node in the Ascend Tree. Click for Sparks, spend Sparks on the upgrades below. Everything here is tunable: costs, cost growth, caps, effects, crit rules, auto-click pacing. The upgrades that matter most are the ones that feed back into the real game — `luck` multiplies your main-game Luck and `cooldown` cuts your roll cooldown — the rest just make the clicking itself stronger. Permanent: ascending never resets your Sparks or your upgrades. Its own RNG for crits, exactly like the shaft has its own for ore.",
+  "unlockNode": "arcade",
+  "currency": { "id": "sparks", "name": "Sparks", "icon": "⚡", "color": "#fde047" },
+
+  "comment_click": "clickCooldownMs is the server-side floor between two manual clicks — it stops a scripted browser clicking 500 times a second, it is not meant to slow a real hand. maxClicksPerTap caps how many clicks one tap may resolve into, so a huge Clicks/Click number can never be used to smuggle a giant payout through one request.",
+  "clickCooldownMs": 60,
+  "maxClicksPerTap": 25,
+
+  "comment_crit": "Every click rolls its own crit from these numbers. critChance upgrades add to baseChance (never past maxChance), critMult upgrades add to baseMult. A crit pays critMult × the click.",
+  "crit": { "baseChance": 0.02, "baseMult": 5, "maxChance": 0.6 },
+
+  "comment_auto": "Auto clicks are banked server-side from real elapsed time, so they cannot be faked by spamming the endpoint. maxBankedMs caps how much time one tick may account for (a tab asleep for an hour pays an hour, not a week); maxClicksPerTick bounds a single response.",
+  "auto": { "maxBankedMs": 120000, "maxClicksPerTick": 400 },
+
+  "comment_effects": "Effect types the upgrades below can use. `fmt` is only how the client words the label: pct → +N%, flat → +N. luck / cooldown / essenceMult / sellMult / mineMult are main-game bonuses and stack with the Ascend Tree and your gear; the click* ones stay inside the minigame.",
+  "effectTypes": {
+    "clickFlat":      { "name": "Sparks / Click",  "icon": "👆", "fmt": "flat", "desc": "+N Sparks on every click" },
+    "clickMult":      { "name": "Spark Value",     "icon": "✨", "fmt": "pct",  "desc": "multiplies Sparks per click" },
+    "clicksPerClick": { "name": "Clicks / Click",  "icon": "🖱", "fmt": "flat", "desc": "one click counts as several" },
+    "autoClick":      { "name": "Auto Clicks / s", "icon": "🤖", "fmt": "flat", "desc": "clicks by itself, even on another tab" },
+    "critChance":     { "name": "Crit Chance",     "icon": "🎯", "fmt": "pct",  "desc": "every click rolls for a crit" },
+    "critMult":       { "name": "Crit Power",      "icon": "💥", "fmt": "flat", "desc": "a crit pays this much more" },
+    "luck":           { "name": "Luck",            "icon": "🍀", "fmt": "pct",  "desc": "multiplies your main-game Luck" },
+    "cooldown":       { "name": "Roll Speed",      "icon": "⚡", "fmt": "pct",  "desc": "cuts your roll cooldown" },
+    "essenceMult":    { "name": "Essence",         "icon": "💠", "fmt": "pct",  "desc": "multiplies essence from rolls" },
+    "sellMult":       { "name": "Sale Price",      "icon": "💰", "fmt": "pct",  "desc": "multiplies aura sale prices" },
+    "mineMult":       { "name": "Mining Yield",    "icon": "⛏", "fmt": "pct",  "desc": "multiplies mining rewards" }
+  },
+
+  "comment_upgrades": "Cost of the next level = floor(baseCost * growth^levelOwned). max: 0 means unlimited. Ordered cheap → expensive, clicker-local first, the main-game bonuses after — that order is what the shop renders.",
+  "upgrades": [
+    { "id": "grip",           "name": "Firm Grip",       "icon": "👆", "desc": "+1 Spark on every click. Where every clicker begins.", "baseCost": 15,    "growth": 1.15, "max": 0,  "effect": { "type": "clickFlat", "perLevel": 1 } },
+    { "id": "lucky_finger",   "name": "Lucky Finger",    "icon": "🎯", "desc": "+1% crit chance. Every click rolls its own crit.",     "baseCost": 120,   "growth": 1.38, "max": 40, "effect": { "type": "critChance", "perLevel": 0.01 } },
+    { "id": "spark_value",    "name": "Spark Polish",    "icon": "✨", "desc": "+10% Sparks per click, multiplicatively.",             "baseCost": 260,   "growth": 1.26, "max": 0,  "effect": { "type": "clickMult", "perLevel": 0.1 } },
+    { "id": "double_click",   "name": "Double Click",    "icon": "🖱", "desc": "One click counts as two. Rolls a crit for each.",      "baseCost": 900,   "growth": 4.5,  "max": 4,  "effect": { "type": "clicksPerClick", "perLevel": 1 } },
+    { "id": "overcharge",     "name": "Overcharge",      "icon": "💥", "desc": "+1 to your crit multiplier. Crits stop being cute.",   "baseCost": 2200,  "growth": 1.9,  "max": 12, "effect": { "type": "critMult", "perLevel": 1 } },
+    { "id": "auto_clicker",   "name": "Auto Clicker",    "icon": "🤖", "desc": "+1 click per second, forever, even while the tab sleeps.", "baseCost": 3500, "growth": 2.5,  "max": 8,  "effect": { "type": "autoClick", "perLevel": 1 } },
+    { "id": "golden_touch",   "name": "Golden Touch",    "icon": "🍀", "desc": "+5% Luck on your real rolls. This is why you are here.", "baseCost": 6000, "growth": 1.75, "max": 15, "effect": { "type": "luck", "perLevel": 0.05 } },
+    { "id": "quick_hands",    "name": "Quick Hands",     "icon": "⚡", "desc": "−4% roll cooldown. Rolls come faster for the rest of the run.", "baseCost": 9000, "growth": 1.85, "max": 10, "effect": { "type": "cooldown", "perLevel": 0.04 } },
+    { "id": "essence_filter", "name": "Essence Filter",  "icon": "💠", "desc": "+15% Essence from every roll.",                        "baseCost": 14000, "growth": 1.95, "max": 10, "effect": { "type": "essenceMult", "perLevel": 0.15 } },
+    { "id": "merchant_hands", "name": "Merchant Hands",  "icon": "💰", "desc": "+12% on every aura you sell.",                         "baseCost": 22000, "growth": 2.0,  "max": 10, "effect": { "type": "sellMult", "perLevel": 0.12 } },
+    { "id": "vein_resonance", "name": "Vein Resonance",  "icon": "⛏", "desc": "+20% from every ore the shaft hands you.",             "baseCost": 30000, "growth": 2.1,  "max": 8,  "effect": { "type": "mineMult", "perLevel": 0.2 } }
+  ]
+}

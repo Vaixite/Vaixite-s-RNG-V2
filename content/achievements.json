@@ -1,0 +1,89 @@
+{
+  "comment": "ACHIEVEMENTS — one line per badge, hot-reloaded like every other content file. An achievement unlocks the moment its metric reaches `target` and never locks again, even if the number falls back down (ascending, selling, spending). Unlocking pays its reward exactly once, in the same tick. Delete a line and the badge disappears from the board; players keep the fact that they earned it. Add a line and everyone who already qualifies gets it on their next roll.",
+
+  "comment_tiers": "Tiers are pure presentation + score: colour, glow and how many Achievement Points the badge is worth. `points` here is the default for every achievement in the tier; an achievement may carry its own `points` to override it. `announce: true` puts an unlock in this tier on the world feed — the ticker shows one badge per batch, the best one, so switching it on for everything just drowns it. The board groups and sorts by the order below, so list them weakest first.",
+  "tiers": [
+    { "id": "bronze", "name": "Bronze", "icon": "🥉", "color": "#c98b5e", "glow": "#7c4a26", "points": 1,  "announce": false },
+    { "id": "silver", "name": "Silver", "icon": "🥈", "color": "#d7dee8", "glow": "#8b95ad", "points": 3,  "announce": false },
+    { "id": "gold",   "name": "Gold",   "icon": "🥇", "color": "#fbd24a", "glow": "#f59e0b", "points": 8,  "announce": true },
+    { "id": "mythic", "name": "Mythic", "icon": "🏆", "color": "#fb7185", "glow": "#e11d48", "points": 25, "announce": true }
+  ],
+
+  "comment_metrics": "Every achievement names a `metric` the engine knows how to measure and a `target` it has to reach. Metrics marked below with (ref) also need a `ref` — an aura, ore or biome id from the other content files — and the loader refuses a line whose ref does not exist. `below: true` metrics unlock by getting *under* the target (a cooldown, say) instead of over it. Rewards are optional and may carry `money`, `essence`, or both.",
+  "comment_metric_reference": "rolls / uniqueAuras / bestOdds / ascensions / luck / cooldownMs(below) / moneyEarned / essenceEarned / sells / crafts / gearCrafted / gearEquipped / itemsUsed / potions / minePicks / clicks / sparks / bestClick / crits / biomesSeen / upgradesBought / treeLevels / pointsEarned — plus the three that take a ref: ownAura, auraCount and oreFind.",
+
+  "achievements": [
+    { "id": "first_roll",      "name": "First Light",        "icon": "✨", "desc": "Roll your very first aura. Everyone starts at 1 in 2.", "tier": "bronze", "metric": "rolls", "target": 1, "reward": { "money": 25 } },
+    { "id": "roll_100",        "name": "Warming Up",         "icon": "🎲", "desc": "Roll 100 auras.", "tier": "bronze", "metric": "rolls", "target": 100, "reward": { "money": 500 } },
+    { "id": "roll_1k",         "name": "Regular",            "icon": "🎲", "desc": "Roll 1,000 auras.", "tier": "silver", "metric": "rolls", "target": 1000, "reward": { "money": 5000, "essence": 500 } },
+    { "id": "roll_10k",        "name": "Grinder",            "icon": "⏳", "desc": "Roll 10,000 auras.", "tier": "gold", "metric": "rolls", "target": 10000, "reward": { "money": 50000, "essence": 5000 } },
+    { "id": "roll_100k",       "name": "One With The Dice",  "icon": "🌀", "desc": "Roll 100,000 auras. Your hand has stopped being the deciding factor.", "tier": "mythic", "metric": "rolls", "target": 100000, "reward": { "money": 500000, "essence": 50000 } },
+
+    { "id": "find_5",          "name": "Collector's Case",   "icon": "📚", "desc": "Have 5 different auras in your bag at once.", "tier": "bronze", "metric": "uniqueAuras", "target": 5, "reward": { "money": 150 } },
+    { "id": "find_15",         "name": "Curator",            "icon": "🖼", "desc": "Have 15 different auras in your bag at once.", "tier": "silver", "metric": "uniqueAuras", "target": 15, "reward": { "money": 3000 } },
+    { "id": "find_30",         "name": "Museum Wing",        "icon": "🏛", "desc": "Have 30 different auras in your bag at once.", "tier": "gold", "metric": "uniqueAuras", "target": 30, "reward": { "money": 60000, "essence": 3000 } },
+    { "id": "find_all",        "name": "The Whole Shelf",    "icon": "🌈", "desc": "Hold every aura in the game at the same time — rolled, native and crafted alike.", "tier": "mythic", "metric": "uniqueAuras", "target": 64, "reward": { "money": 2500000, "essence": 100000 } },
+
+    { "id": "odds_1k",         "name": "Thousand Club",     "icon": "💭", "desc": "Pull something at 1 in 1,000 or rarer.", "tier": "bronze", "metric": "bestOdds", "target": 1000, "reward": { "money": 1000 } },
+    { "id": "odds_100k",       "name": "Exalted Taste",      "icon": "💎", "desc": "Pull something at 1 in 100,000 or rarer.", "tier": "gold", "metric": "bestOdds", "target": 100000, "reward": { "money": 100000, "essence": 5000 } },
+    { "id": "odds_1m",         "name": "Celestial Hands",    "icon": "🌟", "desc": "Pull something at 1 in 1,000,000 or rarer.", "tier": "mythic", "metric": "bestOdds", "target": 1000000, "reward": { "money": 1000000, "essence": 25000 } },
+    { "id": "odds_infinity",   "name": "Beyond Infinity",    "icon": "♾", "desc": "Pull an aura at 1 in 16,777,216 or rarer.", "tier": "mythic", "metric": "bestOdds", "target": 16777216, "reward": { "money": 10000000, "essence": 250000 }, "points": 50 },
+    { "id": "odds_transcend",  "name": "TRANSCENDENCE",      "icon": "🕊", "desc": "Reach the end of the table: 1 in 134,217,728.", "tier": "mythic", "metric": "bestOdds", "target": 134217728, "reward": { "money": 100000000, "essence": 1000000 }, "points": 100 },
+
+    { "id": "own_star",        "name": "Caught A Star",      "icon": "⭐", "desc": "Roll ★ — the Dreamspace native that lives at 1 in 100,000.", "tier": "gold", "metric": "ownAura", "ref": "star", "target": 1, "reward": { "money": 75000 } },
+    { "id": "own_kromatik",    "name": "KROMAT1K",           "icon": "🌈", "desc": "Roll KROMAT1K out of the Cyberspace static.", "tier": "mythic", "metric": "ownAura", "ref": "kromatik", "target": 1, "reward": { "money": 400000, "essence": 20000 } },
+    { "id": "own_monolith",    "name": "Slab Of Heaven",     "icon": "🪦", "desc": "Raise the Monolith in the cauldron. Nothing about that was luck.", "tier": "mythic", "metric": "ownAura", "ref": "monolith", "target": 1, "reward": { "money": 5000000, "essence": 200000 }, "points": 60 },
+    { "id": "own_transcendence","name": "The Last Aura",     "icon": "🏁", "desc": "Own Transcendence — the bottom of the table and the end of the line.", "tier": "mythic", "metric": "ownAura", "ref": "transcendence", "target": 1, "reward": { "money": 50000000, "essence": 500000 }, "points": 150 },
+    { "id": "hundred_commons", "name": "Blue Collar",        "icon": "🧢", "desc": "Hold 100 copies of Common at the same time. Somebody has to.", "tier": "bronze", "metric": "auraCount", "ref": "common", "target": 100, "reward": { "money": 400 } },
+
+    { "id": "ascend_1",        "name": "Ascended",           "icon": "🌀", "desc": "Ascend once. Levels and essence burn; everything else stays.", "tier": "silver", "metric": "ascensions", "target": 1, "reward": { "money": 2500 } },
+    { "id": "ascend_3",        "name": "Repeater",           "icon": "🔁", "desc": "Ascend three times.", "tier": "gold", "metric": "ascensions", "target": 3, "reward": { "money": 40000, "essence": 4000 } },
+    { "id": "ascend_10",       "name": "Ten Thousand Dawns", "icon": "🌅", "desc": "Ascend ten times.", "tier": "mythic", "metric": "ascensions", "target": 10, "reward": { "money": 1000000, "essence": 60000 } },
+    { "id": "points_100",      "name": "Point Hoarder",      "icon": "✦", "desc": "Earn 100 Ascend Points in total — spending them does not undo this.", "tier": "gold", "metric": "pointsEarned", "target": 100, "reward": { "money": 80000 } },
+
+    { "id": "tree_5",          "name": "Roots",              "icon": "🌱", "desc": "Buy 5 levels in the Ascend Tree.", "tier": "silver", "metric": "treeLevels", "target": 5, "reward": { "money": 6000 } },
+    { "id": "tree_25",         "name": "Canopy",             "icon": "🌳", "desc": "Buy 25 levels in the Ascend Tree.", "tier": "gold", "metric": "treeLevels", "target": 25, "reward": { "money": 120000, "essence": 8000 } },
+
+    { "id": "luck_10",         "name": "Loaded Dice",        "icon": "🍀", "desc": "Reach 10× Luck.", "tier": "bronze", "metric": "luck", "target": 10, "reward": { "money": 800 } },
+    { "id": "luck_100",        "name": "House Edge",         "icon": "🍀", "desc": "Reach 100× Luck.", "tier": "silver", "metric": "luck", "target": 100, "reward": { "money": 12000 } },
+    { "id": "luck_1k",         "name": "Reality Bends",      "icon": "🧿", "desc": "Reach 1,000× Luck.", "tier": "gold", "metric": "luck", "target": 1000, "reward": { "money": 150000, "essence": 10000 } },
+    { "id": "luck_100k",       "name": "Luck Is A Suggestion","icon": "👑", "desc": "Reach 100,000× Luck.", "tier": "mythic", "metric": "luck", "target": 100000, "reward": { "money": 3000000, "essence": 150000 } },
+
+    { "id": "fast_300",        "name": "Quick Fingers",      "icon": "⚡", "desc": "Get your roll cooldown under 300 ms.", "tier": "silver", "metric": "cooldownMs", "target": 300, "reward": { "money": 8000 } },
+    { "id": "fast_floor",      "name": "Lightning Reflexes", "icon": "🌩", "desc": "Push your roll cooldown to the 120 ms floor.", "tier": "gold", "metric": "cooldownMs", "target": 120, "reward": { "money": 90000, "essence": 6000 } },
+
+    { "id": "money_10k",       "name": "Pocket Money",       "icon": "💰", "desc": "Earn 10,000 money in total.", "tier": "bronze", "metric": "moneyEarned", "target": 10000, "reward": { "essence": 250 } },
+    { "id": "money_1m",        "name": "Making It Rain",     "icon": "💵", "desc": "Earn 1,000,000 money in total.", "tier": "gold", "metric": "moneyEarned", "target": 1000000, "reward": { "money": 100000 } },
+    { "id": "money_100m",      "name": "Printed Money",      "icon": "🏦", "desc": "Earn 100,000,000 money in total.", "tier": "mythic", "metric": "moneyEarned", "target": 100000000, "reward": { "money": 5000000, "essence": 100000 } },
+    { "id": "essence_1m",      "name": "Essence Baron",      "icon": "💠", "desc": "Earn 1,000,000 essence in total.", "tier": "gold", "metric": "essenceEarned", "target": 1000000, "reward": { "money": 120000 } },
+
+    { "id": "sell_50",         "name": "Market Stall",       "icon": "🏪", "desc": "Sell 50 auras.", "tier": "bronze", "metric": "sells", "target": 50, "reward": { "money": 600 } },
+    { "id": "sell_1k",         "name": "Wholesale",          "icon": "📦", "desc": "Sell 1,000 auras.", "tier": "silver", "metric": "sells", "target": 1000, "reward": { "money": 15000 } },
+    { "id": "craft_10",        "name": "Apprentice",         "icon": "⚗", "desc": "Craft 10 recipes.", "tier": "bronze", "metric": "crafts", "target": 10, "reward": { "money": 1200 } },
+    { "id": "craft_100",       "name": "Journeyman",         "icon": "⚗", "desc": "Craft 100 recipes.", "tier": "gold", "metric": "crafts", "target": 100, "reward": { "money": 100000, "essence": 5000 } },
+
+    { "id": "gear_1",          "name": "Well Dressed",       "icon": "🧤", "desc": "Forge your first piece of gear.", "tier": "bronze", "metric": "gearCrafted", "target": 1, "reward": { "money": 500 } },
+    { "id": "gear_full_set",   "name": "Full Kit",           "icon": "🛡", "desc": "Wear a piece in all four slots at once.", "tier": "silver", "metric": "gearEquipped", "target": 4, "reward": { "money": 20000 } },
+    { "id": "gear_25",         "name": "Forge Addict",       "icon": "⚒", "desc": "Forge 25 pieces of gear. Two gloves are never the same glove.", "tier": "gold", "metric": "gearCrafted", "target": 25, "reward": { "money": 150000, "essence": 8000 } },
+
+    { "id": "items_10",        "name": "Potion Habit",       "icon": "🧪", "desc": "Use 10 items.", "tier": "bronze", "metric": "itemsUsed", "target": 10, "reward": { "money": 1500 } },
+    { "id": "potions_1",       "name": "Bottoms Up",         "icon": "🍾", "desc": "Drink a Heavenly Potion and let it pay for a roll.", "tier": "silver", "metric": "potions", "target": 1, "reward": { "money": 10000 } },
+    { "id": "potions_25",      "name": "Bottle A Year",      "icon": "🥂", "desc": "Cash in 25 Heavenly Potion charges.", "tier": "gold", "metric": "potions", "target": 25, "reward": { "money": 200000 } },
+
+    { "id": "mine_100",        "name": "Rock Bottom",        "icon": "⛏", "desc": "Reveal 100 cells in the shaft.", "tier": "silver", "metric": "minePicks", "target": 100, "reward": { "money": 12000 } },
+    { "id": "mine_2500",       "name": "Deep Shaft",         "icon": "🕳", "desc": "Reveal 2,500 cells in the shaft — the drill counts.", "tier": "gold", "metric": "minePicks", "target": 2500, "reward": { "money": 200000, "essence": 15000 } },
+    { "id": "ore_star_core",   "name": "Bottled Sun",        "icon": "☀️", "desc": "Bring a Star Core up from the shaft.", "tier": "mythic", "metric": "oreFind", "ref": "star_core", "target": 1, "reward": { "money": 500000, "essence": 25000 } },
+
+    { "id": "click_1k",        "name": "Finger Workout",     "icon": "👆", "desc": "Click 1,000 times in the Spark Clicker.", "tier": "silver", "metric": "clicks", "target": 1000, "reward": { "money": 9000 } },
+    { "id": "click_50k",       "name": "Carpal",             "icon": "🖱", "desc": "Click 50,000 times in the Spark Clicker.", "tier": "gold", "metric": "clicks", "target": 50000, "reward": { "money": 130000, "essence": 9000 } },
+    { "id": "crit_500",        "name": "Critical Mass",      "icon": "💥", "desc": "Land 500 crit clicks.", "tier": "gold", "metric": "crits", "target": 500, "reward": { "money": 110000 } },
+    { "id": "click_big",       "name": "One Good Click",     "icon": "🔥", "desc": "Land a single click worth 1,000 Sparks.", "tier": "gold", "metric": "bestClick", "target": 1000, "reward": { "money": 140000 } },
+    { "id": "sparks_1m",       "name": "Spark Millionaire",  "icon": "⚡", "desc": "Earn 1,000,000 Sparks in total.", "tier": "mythic", "metric": "sparks", "target": 1000000, "reward": { "money": 800000, "essence": 40000 } },
+
+    { "id": "biomes_3",        "name": "Traveller",          "icon": "🧭", "desc": "Roll while three different biomes are up. The world rotates for everyone — just wait.", "tier": "bronze", "metric": "biomesSeen", "target": 3, "reward": { "money": 900 } },
+    { "id": "biomes_all",      "name": "Every Sky",          "icon": "🌌", "desc": "Roll in every biome the rotation has to offer.", "tier": "gold", "metric": "biomesSeen", "target": 9, "reward": { "money": 90000, "essence": 6000 } },
+
+    { "id": "upgrades_25",     "name": "Invested",           "icon": "📈", "desc": "Buy 25 upgrade levels in total.", "tier": "silver", "metric": "upgradesBought", "target": 25, "reward": { "money": 10000 } },
+    { "id": "upgrades_200",    "name": "Maximalist",         "icon": "📊", "desc": "Buy 200 upgrade levels in total, across every run.", "tier": "gold", "metric": "upgradesBought", "target": 200, "reward": { "money": 180000, "essence": 12000 } }
+  ]
+}

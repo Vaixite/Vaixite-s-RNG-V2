@@ -2,7 +2,7 @@
   "global": [
     { "id": "common",       "name": "Common",        "odds": 2,         "color": "#b6c2cf", "fx": "soft" },
     { "id": "uncommon",     "name": "Uncommon",      "odds": 4,         "color": "#8fe3a8", "fx": "soft" },
-    { "id": "good",         "name": "Good",          "odds": 6,         "color": "#7be0c4", "fx": "soft" },
+    { "id": "cool",         "name": "Cool",          "odds": 6,         "color": "#7be0c4", "fx": "soft" },
     { "id": "natural",      "name": "Natural",       "odds": 8,         "color": "#a6e07b", "fx": "soft" },
     { "id": "rare",         "name": "Rare",          "odds": 16,        "color": "#5fb8ff", "fx": "orbit" },
     { "id": "divinus",      "name": "Divinus",       "odds": 32,        "color": "#ffe98a", "fx": "orbit" },
@@ -63,5 +63,10 @@
     { "id": "entropy",   "name": "Entropy",   "odds": 300000, "color": "#7c3aed", "fx": "eclipse","biome": "void" },
     { "id": "hallowed",  "name": "Hallowed",  "odds": 1600,   "color": "#fff3b0", "fx": "halo",   "biome": "heaven" },
     { "id": "seraphic",  "name": "Seraphic",  "odds": 50000,  "color": "#fde68a", "fx": "halo",   "biome": "heaven" }
+  ],
+  "crafted": [
+    { "id": "reliquary", "name": "Reliquary", "odds": 20480,    "color": "#fbbf24", "fx": "gear" },
+    { "id": "covenant",  "name": "Covenant",  "odds": 163840,   "color": "#22d3ee", "fx": "shard" },
+    { "id": "monolith",  "name": "Monolith",  "odds": 50331648, "color": "#818cf8", "fx": "halo" }
   ]
 }

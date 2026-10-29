@@ -1,0 +1,106 @@
+{
+  "comment": "The Ascend Tree — a Cookie-Clicker-style permanent upgrade tree bought with Ascend Points. Unlocked once you ascend at least once. Nodes are placed on a 0-100 canvas (x/y are percentages) and connected to their prerequisites. Effects stack forever across ascensions.",
+  "effectTypes": {
+    "luckMult":   { "name": "Luck",          "icon": "🍀", "fmt": "pct", "desc": "multiplies all Luck" },
+    "cooldownMult": { "name": "Roll Speed",  "icon": "⚡", "fmt": "pct", "desc": "reduces roll cooldown" },
+    "rollsFlat":  { "name": "Auras / Roll",  "icon": "🎲", "fmt": "flat", "desc": "extra auras per roll" },
+    "autoFlat":   { "name": "Auto Rolls / s", "icon": "🤖", "fmt": "flat", "desc": "extra auto-rolls per second" },
+    "essenceMult": { "name": "Essence",      "icon": "💠", "fmt": "pct", "desc": "multiplies essence from rolls" },
+    "sellMult":   { "name": "Sale Price",    "icon": "💰", "fmt": "pct", "desc": "multiplies aura sale prices" },
+    "mineMult":   { "name": "Mining Yield",  "icon": "⛏", "fmt": "pct", "desc": "multiplies mining rewards" },
+    "mineAuto":   { "name": "Auto Picks / s", "icon": "🦾", "fmt": "flat", "desc": "the shaft digs itself" },
+    "unlock":     { "name": "Unlock",        "icon": "🔓", "fmt": "none", "desc": "unlocks a feature" }
+  },
+  "nodes": [
+    {
+      "id": "ascended_luck", "name": "Ascended Luck", "icon": "✦",
+      "desc": "The foundation. Pure multiplied Luck, forever.",
+      "x": 50, "y": 88, "cost": 1, "costGrowth": 1.7, "maxLevel": 10,
+      "requires": [], "effect": { "type": "luckMult", "perLevel": 0.12 }
+    },
+    {
+      "id": "grindstone", "name": "The Grindstone", "icon": "🌀",
+      "desc": "Patience is its own reward. A second root of raw Luck.",
+      "x": 16, "y": 88, "cost": 1, "costGrowth": 1.6, "maxLevel": 15,
+      "requires": [], "effect": { "type": "luckMult", "perLevel": 0.08 }
+    },
+    {
+      "id": "swift", "name": "Swift Rolls", "icon": "⚡",
+      "desc": "The cooldown between rolls shrinks with every level.",
+      "x": 74, "y": 70, "cost": 2, "costGrowth": 1.8, "maxLevel": 5,
+      "requires": ["ascended_luck"], "effect": { "type": "cooldownMult", "perLevel": 0.08 }
+    },
+    {
+      "id": "essence_well", "name": "Essence Well", "icon": "💠",
+      "desc": "Every roll drips more essence.",
+      "x": 30, "y": 68, "cost": 2, "costGrowth": 1.7, "maxLevel": 8,
+      "requires": ["ascended_luck"], "effect": { "type": "essenceMult", "perLevel": 0.25 }
+    },
+    {
+      "id": "auto_plus", "name": "Automation", "icon": "🤖",
+      "desc": "+1 free auto-roll per second per level, on top of everything else.",
+      "x": 50, "y": 62, "cost": 3, "costGrowth": 2.0, "maxLevel": 5,
+      "requires": ["ascended_luck"], "effect": { "type": "autoFlat", "perLevel": 1 }
+    },
+    {
+      "id": "mining", "name": "Mining License", "icon": "⛏",
+      "desc": "Unlocks the Mining Shaft — dig veins of ores with their own odds. Rarer ore, more money and essence.",
+      "x": 10, "y": 52, "cost": 4, "costGrowth": 1, "maxLevel": 1,
+      "requires": ["grindstone"], "effect": { "type": "unlock", "unlock": "mining" }
+    },
+    {
+      "id": "rich_veins", "name": "Rich Veins", "icon": "💎",
+      "desc": "Every ore you mine pays out more.",
+      "x": 10, "y": 32, "cost": 3, "costGrowth": 1.9, "maxLevel": 5,
+      "requires": ["mining"], "effect": { "type": "mineMult", "perLevel": 0.3 }
+    },
+    {
+      "id": "auto_drill", "name": "Automated Drill", "icon": "🦾",
+      "desc": "The shaft digs itself. Every level auto-picks cells per second — it keeps working on other tabs and rolls a fresh vein the moment this one runs dry.",
+      "x": 10, "y": 12, "cost": 6, "costGrowth": 1.9, "maxLevel": 5,
+      "requires": ["rich_veins"], "effect": { "type": "mineAuto", "perLevel": 0.5 }
+    },
+    {
+      "id": "merchant", "name": "Merchant's Eye", "icon": "💰",
+      "desc": "Your auras sell for more everywhere.",
+      "x": 30, "y": 48, "cost": 2, "costGrowth": 1.8, "maxLevel": 6,
+      "requires": ["essence_well"], "effect": { "type": "sellMult", "perLevel": 0.2 }
+    },
+    {
+      "id": "extra_aura", "name": "Extra Aura", "icon": "🎲",
+      "desc": "+1 aura on every single roll. Stacks with Multi Roll.",
+      "x": 74, "y": 50, "cost": 6, "costGrowth": 2.6, "maxLevel": 3,
+      "requires": ["swift"], "effect": { "type": "rollsFlat", "perLevel": 1 }
+    },
+    {
+      "id": "deep_fortune", "name": "Deep Fortune", "icon": "🍀",
+      "desc": "Luck, but serious. The tree's big middle node.",
+      "x": 50, "y": 40, "cost": 8, "costGrowth": 1.9, "maxLevel": 10,
+      "requires": ["ascended_luck", "auto_plus"], "effect": { "type": "luckMult", "perLevel": 0.2 }
+    },
+    {
+      "id": "tycoon", "name": "Essence Tycoon", "icon": "👑",
+      "desc": "Essence income, again, from a different angle.",
+      "x": 30, "y": 28, "cost": 6, "costGrowth": 2.0, "maxLevel": 5,
+      "requires": ["merchant"], "effect": { "type": "essenceMult", "perLevel": 0.5 }
+    },
+    {
+      "id": "arcade", "name": "Arcade Cabinet", "icon": "🕹",
+      "desc": "Unlocks the Spark Clicker — a side minigame of its own. Click for Sparks, spend them on permanent upgrades, and the good ones feed straight back into your real rolls.",
+      "x": 90, "y": 88, "cost": 3, "costGrowth": 1, "maxLevel": 1,
+      "requires": [], "effect": { "type": "unlock", "unlock": "clicker" }
+    },
+    {
+      "id": "overdrive", "name": "Overdrive", "icon": "🚀",
+      "desc": "Cooldown crushed and two extra auras per roll. The endgame roll node.",
+      "x": 74, "y": 30, "cost": 12, "costGrowth": 2.2, "maxLevel": 2,
+      "requires": ["extra_aura", "deep_fortune"], "effect": { "type": "rollsFlat", "perLevel": 2, "bonusCooldownMult": 0.1 }
+    },
+    {
+      "id": "singularity_core", "name": "Singularity Core", "icon": "🌌",
+      "desc": "The top of the tree. Everything you are, multiplied.",
+      "x": 50, "y": 12, "cost": 20, "costGrowth": 2.5, "maxLevel": 5,
+      "requires": ["deep_fortune", "tycoon", "overdrive"], "effect": { "type": "luckMult", "perLevel": 0.5 }
+    }
+  ]
+}
